@@ -56,19 +56,20 @@ class Non_preemptive_Priority_Scheduling {
             }
 
             ArrayList<Object> currentProcess = D_processes.get(current_process);
-            System.out.println("Current process's name: " + currentProcess.get(0) +
-                    " Current process's priority: " + currentProcess.get(3));
+            System.out.println("Current process's name: " + currentProcess.get(0));
 
             int waiting_time = time_now - (int)currentProcess.get(1);
             D_processes.remove(current_process);
             System.out.println("Waiting time : " + waiting_time);
             System.out.println("TurnAround time : " + ((int)currentProcess.get(2)));
-            total_turnaroud_time += (int)currentProcess.get(2);
             total_waiting_time += waiting_time;
+            
+            time_now += (int) currentProcess.get(2);
+            total_turnaroud_time += time_now - (int)currentProcess.get(1);
 
-            time_now += (int) currentProcess.get(2) + context_switch;
+            time_now += context_switch;
             try {
-                 Thread.sleep(context_switch);
+                 Thread.sleep(context_switch * 1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
